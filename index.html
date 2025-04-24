@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mehran MK | Cyber Operations</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyberblue: '#00f0ff',
+                        cybergreen: '#00ff88',
+                        darkmatrix: '#0a0a0a',
+                        codedark: '#0d1117',
+                    },
+                    fontFamily: {
+                        'mono': ['Courier New', 'monospace'],
+                        'digital': ['Share Tech Mono', 'monospace'],
+                    },
+                    animation: {
+                        'text-gradient': 'text-gradient 1.5s linear infinite',
+                        'glow-blue': 'glow-blue 2s ease-in-out infinite alternate',
+                        'glow-green': 'glow-green 2s ease-in-out infinite alternate',
+                        'scanline': 'scanline 8s linear infinite',
+                    },
+                    keyframes: {
+                        'text-gradient': {
+                            'to': { 'background-position': '200% center' },
+                        },
+                        'glow-blue': {
+                            'from': { 'text-shadow': '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6' },
+                            'to': { 'text-shadow': '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #00f0ff, 0 0 40px #00f0ff' },
+                        },
+                        'glow-green': {
+                            'from': { 'text-shadow': '0 0 5px #fff, 0 0 10px #fff, 0 0 15px #00aa55, 0 0 20px #00aa55' },
+                            'to': { 'text-shadow': '0 0 10px #fff, 0 0 20px #fff, 0 0 30px #00ff88, 0 0 40px #00ff88' },
+                        },
+                        'scanline': {
+                            '0%': { transform: 'translateY(-100%)' },
+                            '100%': { transform: 'translateY(100%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+        
+        body {
+            background-color: #0a0a0a;
+            font-family: 'Share Tech Mono', monospace;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(0, 240, 255, 0.1) 50%,
+                transparent 100%
+            );
+            animation: scanline 8s linear infinite;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        
+        .terminal-text {
+            color: #00ff88;
+            text-shadow: 0 0 5px #00ff88;
+        }
+        
+        .matrix-text {
+            background: linear-gradient(to right, #00ff88, #00f0ff, #00ff88);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: text-gradient 3s linear infinite;
+            background-size: 200% auto;
+        }
+        
+        .cyber-border {
+            border: 1px solid #00f0ff;
+            box-shadow: 0 0 10px #00f0ff, inset 0 0 10px #00f0ff;
+        }
+        
+        .cyber-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 240, 255, 0.3);
+        }
+        
+        .binary-rain {
+            position: absolute;
+            color: rgba(0, 255, 136, 0.5);
+            font-size: 14px;
+            white-space: nowrap;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            animation: fall linear infinite;
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+        
+        .glitch {
+            position: relative;
+        }
+        
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .glitch::before {
+            color: #00f0ff;
+            animation: glitch-effect 3s infinite;
+        }
+        
+        .glitch::after {
+            color: #ff00aa;
+            animation: glitch-effect 2s infinite reverse;
+        }
+        
+        @keyframes glitch-effect {
+            0% { transform: translate(0); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(-3px, -3px); }
+            60% { transform: translate(3px, 3px); }
+            80% { transform: translate(3px, -3px); }
+            100% { transform: translate(0); }
+        }
+        
+        .password-input {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #00ff88;
+            color: #00ff88;
+            font-family: 'Share Tech Mono', monospace;
+            outline: none;
+        }
+        
+        .password-input::placeholder {
+            color: rgba(0, 255, 136, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-codedark text-gray-300">
+    <!-- Binary rain effect -->
+    <div id="binaryRain"></div>
+    
+    <!-- Scanline effect -->
+    <div class="scanline"></div>
+    
+    <!-- Main container -->
+    <div class="container mx-auto px-4 py-8 relative">
+        <!-- Header -->
+        <header class="flex flex-col items-center mb-12">
+            <div class="glitch mb-4" data-text="MEHRAN MK">
+                <h1 class="text-5xl md:text-6xl font-bold matrix-text">MEHRAN MK</h1>
+            </div>
+            <div class="flex space-x-4 mb-6">
+                <span class="text-cyberblue animate-glow-blue">CYBER SECURITY</span>
+                <span class="text-cybergreen animate-glow-green">PHISHING SPECIALIST</span>
+            </div>
+            <div class="terminal-text text-lg mb-8 text-center">
+                <p>>_ Access Granted: Welcome to the digital shadows</p>
+            </div>
+        </header>
+        
+        <!-- Main content -->
+        <main class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <!-- About section -->
+            <div class="cyber-border p-6 rounded-lg bg-black bg-opacity-50 cyber-card transition-all duration-300">
+                <h2 class="text-2xl font-bold mb-4 text-cyberblue flex items-center">
+                    <i class="fas fa-terminal mr-2"></i> ABOUT_ME.EXE
+                </h2>
+                <div class="terminal-text">
+                    <p class="mb-4">> Mehran MK | Cyber Operations Specialist</p>
+                    <p class="mb-4">> Expertise: Advanced Phishing Techniques</p>
+                    <p class="mb-4">> Supply Chain Security Consultant</p>
+                    <p class="mb-4">> Telegram: @hzoho</p>
+                    <p class="mb-4">> Channel: @wash_mk</p>
+                    <p>> Operating in the digital shadows since [REDACTED]</p>
+                </div>
+            </div>
+            
+            <!-- Services section -->
+            <div class="cyber-border p-6 rounded-lg bg-black bg-opacity-50 cyber-card transition-all duration-300">
+                <h2 class="text-2xl font-bold mb-4 text-cybergreen flex items-center">
+                    <i class="fas fa-lock mr-2"></i> SERVICES.SYS
+                </h2>
+                <ul class="space-y-3 terminal-text">
+                    <li class="flex items-center">
+                        <i class="fas fa-arrow-right text-cyberblue mr-2"></i>
+                        Advanced Phishing Solutions
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-arrow-right text-cyberblue mr-2"></i>
+                        Supply Chain Security
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-arrow-right text-cyberblue mr-2"></i>
+                        Digital Identity Protection
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-arrow-right text-cyberblue mr-2"></i>
+                        Secure Communications
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-arrow-right text-cyberblue mr-2"></i>
+                        Custom Cyber Solutions
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Contact section -->
+            <div class="cyber-border p-6 rounded-lg bg-black bg-opacity-50 cyber-card transition-all duration-300 md:col-span-2">
+                <h2 class="text-2xl font-bold mb-4 text-cyberblue flex items-center">
+                    <i class="fas fa-network-wired mr-2"></i> CONNECT.TCP
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-xl font-bold mb-3 text-cybergreen">Secure Connection</h3>
+                        <div class="terminal-text">
+                            <p class="mb-2">> For secure communications:</p>
+                            <p class="mb-4">> Telegram: @hzoho</p>
+                            <p class="mb-2">> Public channel:</p>
+                            <p>> @wash_mk</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold mb-3 text-cybergreen">Encrypted Message</h3>
+                        <form class="space-y-4">
+                            <div>
+                                <input type="text" placeholder="Your identifier" class="password-input w-full py-2 px-3 bg-transparent">
+                            </div>
+                            <div>
+                                <input type="password" placeholder="Encryption key" class="password-input w-full py-2 px-3 bg-transparent">
+                            </div>
+                            <div>
+                                <textarea placeholder="Secure message" class="password-input w-full py-2 px-3 bg-transparent h-24"></textarea>
+                            </div>
+                            <button type="submit" class="bg-gradient-to-r from-cybergreen to-cyberblue text-black font-bold py-2 px-6 rounded hover:opacity-90 transition-opacity">
+                                <i class="fas fa-paper-plane mr-2"></i> SEND
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Footer -->
+        <footer class="text-center py-6 border-t border-cyberblue border-opacity-20">
+            <div class="terminal-text">
+                <p>> System Status: <span class="text-cybergreen">ACTIVE</span></p>
+                <p class="mt-2">> Last Update: [SYSTEM TIME REDACTED]</p>
+                <p class="mt-4 text-sm opacity-70">© 2023 Mehran MK | All systems operational</p>
+            </div>
+        </footer>
+    </div>
+    
+    <script>
+        // Create binary rain effect
+        function createBinaryRain() {
+            const container = document.getElementById('binaryRain');
+            const characters = ['0', '1', '0', '1', '0', '1', '0', '1', '0', '1'];
+            const windowWidth = window.innerWidth;
+            
+            for (let i = 0; i < 50; i++) {
+                const element = document.createElement('div');
+                element.className = 'binary-rain';
+                element.style.left = Math.random() * windowWidth + 'px';
+                element.style.animationDuration = (Math.random() * 5 + 3) + 's';
+                element.style.animationDelay = (Math.random() * 5) + 's';
+                
+                let binaryText = '';
+                const length = Math.floor(Math.random() * 20) + 10;
+                for (let j = 0; j < length; j++) {
+                    binaryText += characters[Math.floor(Math.random() * characters.length)] + '\n';
+                }
+                
+                element.textContent = binaryText;
+                container.appendChild(element);
+            }
+        }
+        
+        // Typewriter effect for terminal text
+        function typeWriter(element) {
+            const text = element.textContent;
+            element.textContent = '';
+            
+            let i = 0;
+            const speed = 20;
+            
+            function type() {
+                if (i < text.length) {
+                    element.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            
+            type();
+        }
+        
+        // Initialize effects when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            createBinaryRain();
+            
+            // Apply typewriter effect to all terminal text
+            const terminalTexts = document.querySelectorAll('.terminal-text p');
+            terminalTexts.forEach(text => {
+                typeWriter(text);
+            });
+            
+            // Add glitch effect randomly
+            setInterval(() => {
+                const elements = document.querySelectorAll('.glitch');
+                elements.forEach(el => {
+                    if (Math.random() > 0.7) {
+                        el.classList.add('glitch-active');
+                        setTimeout(() => {
+                            el.classList.remove('glitch-active');
+                        }, 500);
+                    }
+                });
+            }, 3000);
+        });
+        
+        // Matrix effect for header
+        const header = document.querySelector('header');
+        header.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            header.style.setProperty('--x', x);
+            header.style.setProperty('--y', y);
+        });
+    </script>
+</body>
+</html>
